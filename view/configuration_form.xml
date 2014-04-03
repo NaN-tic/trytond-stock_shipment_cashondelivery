@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- This file is part stock_shipment_cashondelivery module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/field[@name=&quot;sale_shipment_method&quot;]"
+            position="after">
+        <newline/>
+        <field name="cashondelivery_payments" colspan="4"/>
+    </xpath>
+</data>

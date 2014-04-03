@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- This file is part stock_shipment_cashondelivery module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@id=&quot;outgoing_moves&quot;]"
+            position="after">
+        <page string="Carrier Delivery" id="carrier-delivery"
+                states="{'invisible': ~Eval('carrier')}" col="6">
+            <label name="carrier_cashondelivery"/>
+            <field name="carrier_cashondelivery"/>
+            <label name="carrier_sale_price_total"/>
+            <field name="carrier_sale_price_total"/>
+            <label name="carrier_cashondelivery_total"/>
+            <field name="carrier_cashondelivery_total"/>
+        </page>
+    </xpath>
+</data>
