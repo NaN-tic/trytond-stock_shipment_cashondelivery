@@ -43,11 +43,14 @@ class ShipmentOut:
         if hasattr(cls, 'cost_currency_digits'):
             cls.carrier_cashondelivery_total.digits = (16,
                 Eval('cost_currency_digits', 2))
+            cls.carrier_cashondelivery_total.depends.append(
+                'cost_currency_digits')
         else:
             cls.carrier_cashondelivery_total.digits = (16, 2)
         if hasattr(cls, 'currency_digits'):
             cls.carrier_sale_price_total.digits = (16,
                 Eval('currency_digits', 2))
+            cls.carrier_sale_price_total.depends.append('currency_digits')
         else:
             cls.carrier_sale_price_total.digits = (16, 2)
 
