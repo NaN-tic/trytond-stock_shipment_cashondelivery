@@ -26,14 +26,12 @@ class ShipmentOut:
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
             },
-        on_change_with=['carrier_cashondelivery', 'origin_cache', 'origin'],
         depends=['carrier_cashondelivery']),
         'on_change_with_carrier_sale_price_total')
     carrier_price_total = fields.Function(fields.Numeric('Price Total',
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
             },
-        on_change_with=['carrier_cashondelivery', 'origin_cache', 'origin'],
         depends=['carrier_cashondelivery']),
         'on_change_with_carrier_price_total')
 
@@ -66,9 +64,11 @@ class ShipmentOut:
             price = self.total_amount_func
         return price
 
+    @fields.depends('carrier_cashondelivery', 'origin_cache', 'origin')
     def on_change_with_carrier_price_total(self, name=None):
         return self.get_carrier_price_total()
 
+    @fields.depends('carrier_cashondelivery', 'origin_cache', 'origin')
     def on_change_with_carrier_sale_price_total(self, name=None):
         """Get Sale Total Amount if shipment origin is a sale"""
         price = Decimal(0)
