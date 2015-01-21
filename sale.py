@@ -11,15 +11,17 @@ class Sale:
     __name__ = 'sale.sale'
 
     def create_shipment(self, shipment_type):
+        pool = Pool()
         shipments = super(Sale, self).create_shipment(shipment_type)
         if shipment_type != 'out' or not shipments:
             return
-        Config = Pool().get('sale.configuration')
+
+        Config = pool.get('sale.configuration')
+        ShipmentOut = pool.get('stock.shipment.out')
         config = Config(1)
-        for payment_type in config.cashondelivery_payments:
-            if self.payment_type == payment_type:
-                for shipment in shipments:
-                    shipment.carrier_cashondelivery = True
-                    shipment.save()
-                break
+
+        if self.payment_type in config.cashondelivery_payments:
+            ShipmentOut.write(shipments, {
+                'carrier_cashondelivery': True,
+                })
         return shipments
