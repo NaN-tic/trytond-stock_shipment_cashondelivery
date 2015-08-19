@@ -80,3 +80,10 @@ class ShipmentOut:
         if origin and origin.__name__ == 'sale.sale':
             price = origin.total_amount
         return price
+
+    @classmethod
+    def view_attributes(cls):
+        return super(ShipmentOut, cls).view_attributes() + [
+            ('//page[@id="carrier-delivery"]', 'state', {
+                    'invisible': ~Eval('carrier'),
+                    })]
