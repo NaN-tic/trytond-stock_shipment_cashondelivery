@@ -84,6 +84,6 @@ class ShipmentOut:
     @classmethod
     def view_attributes(cls):
         return super(ShipmentOut, cls).view_attributes() + [
-            ('//page[@id="carrier-delivery"]', 'state', {
+            ('//page[@id="carrier-delivery"]', 'states', {
                     'invisible': ~Eval('carrier'),
                     })]
