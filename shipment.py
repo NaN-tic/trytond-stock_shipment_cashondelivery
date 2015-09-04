@@ -4,7 +4,7 @@
 from decimal import Decimal
 from trytond.model import fields
 from trytond.pool import PoolMeta
-from trytond.pyson import Eval
+from trytond.pyson import Eval, Equal
 
 __all__ = ['ShipmentOut']
 __metaclass__ = PoolMeta
@@ -14,6 +14,7 @@ class ShipmentOut:
     __name__ = 'stock.shipment.out'
     carrier_cashondelivery = fields.Boolean('Carrier Cash OnDelivery',
         states={
+            'readonly': Equal(Eval('state'), 'done'),
             'invisible': ~Eval('carrier'),
             }, help='Paid package when carrier delivery')
     carrier_cashondelivery_total = fields.Numeric(
