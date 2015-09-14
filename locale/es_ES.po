@@ -12,7 +12,7 @@ msgstr "Fecha creación"
 
 msgctxt "field:sale.configuration-account.payment.type,create_uid:"
 msgid "Create User"
-msgstr "Usuario de creación"
+msgstr "Usuario creación"
 
 msgctxt "field:sale.configuration-account.payment.type,id:"
 msgid "ID"
@@ -38,6 +38,38 @@ msgctxt "field:sale.configuration-account.payment.type,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
+msgctxt "field:sale.configuration-sale.payment.type,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:sale.configuration-sale.payment.type,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:sale.configuration-sale.payment.type,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:sale.configuration-sale.payment.type,payment_type:"
+msgid "Payment Type"
+msgstr "Tipo de pago"
+
+msgctxt "field:sale.configuration-sale.payment.type,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:sale.configuration-sale.payment.type,sale_configuration:"
+msgid "Sale Configuration"
+msgstr "Configuración ventas"
+
+msgctxt "field:sale.configuration-sale.payment.type,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:sale.configuration-sale.payment.type,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
 msgctxt "field:stock.shipment.out,carrier_cashondelivery:"
 msgid "Carrier Cash OnDelivery"
 msgstr "Transportista contrarreembolso"
@@ -45,6 +77,10 @@ msgstr "Transportista contrarreembolso"
 msgctxt "field:stock.shipment.out,carrier_cashondelivery_total:"
 msgid "Carrier Cash OnDelivery Total"
 msgstr "Total transportista contrarreembolso"
+
+msgctxt "field:stock.shipment.out,carrier_price_total:"
+msgid "Price Total"
+msgstr "Precio total"
 
 msgctxt "field:stock.shipment.out,carrier_sale_price_total:"
 msgid "Sale Total"
@@ -55,6 +91,10 @@ msgid "Paid package when carrier delivery"
 msgstr "Pago el paquete en el momento de la entrega."
 
 msgctxt "model:sale.configuration-account.payment.type,name:"
+msgid "Configuration - Sale Payment Type"
+msgstr "Configuración - Tipo pago venta"
+
+msgctxt "model:sale.configuration-sale.payment.type,name:"
 msgid "Configuration - Sale Payment Type"
 msgstr "Configuración - Tipo pago venta"
 
