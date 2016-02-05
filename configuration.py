@@ -24,13 +24,13 @@ class ConfigurationSalePaymentType(ModelSQL, ModelView):
         TableHandler = backend.get('TableHandler')
         cursor = Transaction().cursor
 
-        super(ConfigurationSalePaymentType, cls).__register__(module_name)
-
         # Migration from 3.6: rename table
         old_table = 'sale_configuration_sale_payment_type_rel'
         new_table = 'sale_configuration_sale_payment_type'
         if TableHandler.table_exist(cursor, old_table):
             TableHandler.table_rename(cursor, old_table, new_table)
+
+        super(ConfigurationSalePaymentType, cls).__register__(module_name)
 
 
 class Configuration:
