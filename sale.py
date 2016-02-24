@@ -10,18 +10,12 @@ __metaclass__ = PoolMeta
 class Sale:
     __name__ = 'sale.sale'
 
-    def create_shipment(self, shipment_type):
-        pool = Pool()
-        shipments = super(Sale, self).create_shipment(shipment_type)
-        if shipment_type != 'out' or not shipments:
-            return
+    def _get_shipment_sale(self, Shipment, key):
+        config = Pool().get('sale.configuration')(1)
 
-        Config = pool.get('sale.configuration')
-        ShipmentOut = pool.get('stock.shipment.out')
-        config = Config(1)
+        shipment = super(Sale, self)._get_shipment_sale(Shipment, key)
 
-        if self.payment_type in config.cashondelivery_payments:
-            ShipmentOut.write(shipments, {
-                'carrier_cashondelivery': True,
-                })
-        return shipments
+        if (Shipment.__name__ == 'stock.shipment.out'
+                and self.payment_type in config.cashondelivery_payments):
+            shipment.carrier_cashondelivery = True
+        return shipment
