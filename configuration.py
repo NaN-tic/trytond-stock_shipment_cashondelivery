@@ -3,7 +3,6 @@
 # copyright notices and license terms.
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import PoolMeta
-from trytond.transaction import Transaction
 from trytond import backend
 
 __all__ = ['ConfigurationSalePaymentType', 'Configuration']
@@ -22,13 +21,12 @@ class ConfigurationSalePaymentType(ModelSQL, ModelView):
     @classmethod
     def __register__(cls, module_name):
         TableHandler = backend.get('TableHandler')
-        cursor = Transaction().cursor
 
         # Migration from 3.6: rename table
         old_table = 'sale_configuration_sale_payment_type_rel'
         new_table = 'sale_configuration_sale_payment_type'
-        if TableHandler.table_exist(cursor, old_table):
-            TableHandler.table_rename(cursor, old_table, new_table)
+        if TableHandler.table_exist(old_table):
+            TableHandler.table_rename(old_table, new_table)
 
         super(ConfigurationSalePaymentType, cls).__register__(module_name)
 
