@@ -7,10 +7,10 @@ from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Equal
 
 __all__ = ['ShipmentOut']
-__metaclass__ = PoolMeta
 
 
 class ShipmentOut:
+    __metaclass__ = PoolMeta
     __name__ = 'stock.shipment.out'
     carrier_cashondelivery = fields.Boolean('Carrier Cash OnDelivery',
         states={

@@ -6,7 +6,6 @@ from trytond.pool import PoolMeta
 from trytond import backend
 
 __all__ = ['ConfigurationSalePaymentType', 'Configuration']
-__metaclass__ = PoolMeta
 
 
 class ConfigurationSalePaymentType(ModelSQL, ModelView):
@@ -32,6 +31,7 @@ class ConfigurationSalePaymentType(ModelSQL, ModelView):
 
 
 class Configuration:
+    __metaclass__ = PoolMeta
     __name__ = 'sale.configuration'
     cashondelivery_payments = fields.Many2Many(
         'sale.configuration-sale.payment.type', 'sale_configuration',
