@@ -54,9 +54,7 @@ class ShipmentOut:
             cls.carrier_sale_price_total.digits = (16, 2)
 
     def get_carrier_price_total(self):
-        '''
-        Return the total price shipment
-        '''
+        'Return the total price shipment'
         if self.carrier_cashondelivery_total:
             price = self.carrier_cashondelivery_total
         elif self.carrier_sale_price_total:
@@ -65,13 +63,14 @@ class ShipmentOut:
             price = self.total_amount_func
         return price
 
-    @fields.depends('carrier_cashondelivery', 'origin_cache', 'origin')
+    @fields.depends('get_carrier_price_total', 'carrier_sale_price_total',
+        'total_amount_func')
     def on_change_with_carrier_price_total(self, name=None):
         return self.get_carrier_price_total()
 
     @fields.depends('carrier_cashondelivery', 'origin_cache', 'origin')
     def on_change_with_carrier_sale_price_total(self, name=None):
-        """Get Sale Total Amount if shipment origin is a sale"""
+        'Get Sale Total Amount if shipment origin is a sale'
         price = Decimal(0)
         origin = None
         if hasattr(self, 'origin_cache') and self.origin_cache:
