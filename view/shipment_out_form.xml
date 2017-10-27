@@ -12,6 +12,8 @@ copyright notices and license terms. -->
             <field name="carrier_sale_price_total"/>
             <label name="carrier_cashondelivery_total"/>
             <field name="carrier_cashondelivery_total"/>
+            <label name="carrier_cashondelivery_price"/>
+            <field name="carrier_cashondelivery_price"/>
         </page>
     </xpath>
 </data>

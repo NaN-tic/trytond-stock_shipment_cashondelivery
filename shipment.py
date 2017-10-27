@@ -23,6 +23,13 @@ class ShipmentOut:
             'readonly': ~Eval('state').in_(['draft', 'waiting', 'assigned',
                 'packed']),
             }, depends=['state'])
+    carrier_cashondelivery_price = fields.Function(fields.Numeric(
+        'Carrier Cash OnDelivery Price', states={
+            'invisible': ~Eval('carrier_cashondelivery'),
+            'readonly': ~Eval('state').in_(['draft', 'waiting', 'assigned',
+                'packed']),
+            }, depends=['state']),
+        'on_change_with_carrier_cashondelivery_price')
     carrier_sale_price_total = fields.Function(fields.Numeric('Sale Total',
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
@@ -80,6 +87,16 @@ class ShipmentOut:
         if origin and origin.__name__ == 'sale.sale':
             price = origin.total_amount
         return price
+
+    @fields.depends('carrier_cashondelivery_total', 'carrier_sale_price_total',
+        'total_amount')
+    def on_change_with_carrier_cashondelivery_price(self, name=None):
+        'Get Price Cash on Delivery'
+        if self.carrier_cashondelivery_total:
+            return self.carrier_cashondelivery_total
+        elif self.carrier_sale_price_total:
+            return self.carrier_sale_price_total
+        return self.total_amount_func
 
     @classmethod
     def view_attributes(cls):
