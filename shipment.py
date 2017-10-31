@@ -92,6 +92,8 @@ class ShipmentOut:
         'total_amount')
     def on_change_with_carrier_cashondelivery_price(self, name=None):
         'Get Price Cash on Delivery'
+        if not self.carrier_cashondelivery:
+            return
         if self.carrier_cashondelivery_total:
             return self.carrier_cashondelivery_total
         elif self.carrier_sale_price_total:
