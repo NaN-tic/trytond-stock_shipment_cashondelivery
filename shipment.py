@@ -88,8 +88,8 @@ class ShipmentOut:
             price = origin.total_amount
         return price
 
-    @fields.depends('carrier_cashondelivery_total', 'carrier_sale_price_total',
-        'total_amount')
+    @fields.depends('carrier_cashondelivery', 'carrier_cashondelivery_total',
+        'carrier_sale_price_total', 'total_amount')
     def on_change_with_carrier_cashondelivery_price(self, name=None):
         'Get Price Cash on Delivery'
         if not self.carrier_cashondelivery:
