@@ -3,7 +3,7 @@
 The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license terms. -->
 <data>
-    <xpath expr="/form/notebook/page[@id=&quot;outgoing_moves&quot;]"
+    <xpath expr="/form/notebook/page[@id='outgoing_moves']"
             position="after">
         <page string="Carrier Delivery" id="carrier-delivery" col="6">
             <label name="carrier_cashondelivery"/>
