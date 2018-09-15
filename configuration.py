@@ -30,8 +30,7 @@ class ConfigurationSalePaymentType(ModelSQL, ModelView):
         super(ConfigurationSalePaymentType, cls).__register__(module_name)
 
 
-class Configuration:
-    __metaclass__ = PoolMeta
+class Configuration(metaclass=PoolMeta):
     __name__ = 'sale.configuration'
     cashondelivery_payments = fields.Many2Many(
         'sale.configuration-sale.payment.type', 'sale_configuration',

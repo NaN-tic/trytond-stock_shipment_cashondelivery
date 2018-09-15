@@ -9,8 +9,7 @@ from trytond.pyson import Eval, Equal
 __all__ = ['ShipmentOut']
 
 
-class ShipmentOut:
-    __metaclass__ = PoolMeta
+class ShipmentOut(metaclass=PoolMeta):
     __name__ = 'stock.shipment.out'
     carrier_cashondelivery = fields.Boolean('Carrier Cash OnDelivery',
         states={
