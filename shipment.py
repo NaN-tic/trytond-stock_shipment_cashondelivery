@@ -58,6 +58,10 @@ class ShipmentOut(metaclass=PoolMeta):
             cls.carrier_sale_price_total.depends.append('currency_digits')
         else:
             cls.carrier_sale_price_total.digits = (16, 2)
+        if hasattr(ShipmentOut, 'origin_cache'):
+            cls.on_change_with_carrier_sale_price_total.depends.add('origin_cache')
+        if hasattr(ShipmentOut, 'origin'):
+            cls.on_change_with_carrier_sale_price_total.depends.add('origin')
 
     def get_carrier_price_total(self):
         'Return the total price shipment'
@@ -66,15 +70,15 @@ class ShipmentOut(metaclass=PoolMeta):
         elif self.carrier_sale_price_total:
             price = self.carrier_sale_price_total
         else:
-            price = self.total_amount_func
+            price = self.total_amount
         return price
 
     @fields.depends('carrier_cashondelivery_total', 'carrier_sale_price_total',
-        'total_amount_func')
+        'total_amount')
     def on_change_with_carrier_price_total(self, name=None):
         return self.get_carrier_price_total()
 
-    @fields.depends('carrier_cashondelivery', 'origin_cache', 'origin')
+    @fields.depends('carrier_cashondelivery')
     def on_change_with_carrier_sale_price_total(self, name=None):
         'Get Sale Total Amount if shipment origin is a sale'
         price = Decimal(0)
@@ -97,7 +101,7 @@ class ShipmentOut(metaclass=PoolMeta):
             return self.carrier_cashondelivery_total
         elif self.carrier_sale_price_total:
             return self.carrier_sale_price_total
-        return self.total_amount_func
+        return self.total_amount
 
     @classmethod
     def view_attributes(cls):
