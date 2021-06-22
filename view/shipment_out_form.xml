@@ -5,7 +5,7 @@ copyright notices and license terms. -->
 <data>
     <xpath expr="/form/notebook/page[@id='outgoing_moves']"
             position="after">
-        <page string="Carrier Delivery" id="carrier-delivery" col="6">
+        <page string="Carrier CashOnDelivery" id="carrier-on-delivery" col="6">
             <label name="carrier_cashondelivery"/>
             <field name="carrier_cashondelivery"/>
             <label name="carrier_sale_price_total"/>
