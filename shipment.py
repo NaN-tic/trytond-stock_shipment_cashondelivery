@@ -5,6 +5,7 @@ from decimal import Decimal
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Equal
+from trytond.modules.currency.fields import Monetary
 
 __all__ = ['ShipmentOut']
 
@@ -15,49 +16,38 @@ class ShipmentOut(metaclass=PoolMeta):
         states={
             'readonly': Equal(Eval('state'), 'done'),
             'invisible': ~Eval('carrier'),
-            }, help='Paid package when carrier delivery')
-    carrier_cashondelivery_total = fields.Numeric(
-        'Carrier Cash OnDelivery Total', states={
+        }, help='Paid package when carrier delivery')
+    carrier_cashondelivery_total = Monetary(
+        'Carrier Cash OnDelivery Total', currency='currency', digits='currency',
+        states={
             'invisible': ~Eval('carrier_cashondelivery'),
             'readonly': ~Eval('state').in_(['draft', 'waiting', 'assigned',
                 'packed']),
-            }, depends=['state'])
-    carrier_cashondelivery_price = fields.Function(fields.Numeric(
-        'Carrier Cash OnDelivery Price', states={
+        }, depends=['state'])
+    carrier_cashondelivery_price = fields.Function(Monetary(
+        'Carrier Cash OnDelivery Price', currency='currency', digits='currency',
+        states={
             'invisible': ~Eval('carrier_cashondelivery'),
             'readonly': ~Eval('state').in_(['draft', 'waiting', 'assigned',
                 'packed']),
-            }, depends=['state']),
+        }, depends=['state']),
         'on_change_with_carrier_cashondelivery_price')
-    carrier_sale_price_total = fields.Function(fields.Numeric('Sale Total',
+    carrier_sale_price_total = fields.Function(Monetary('Sale Total',
+        currency='currency', digits='currency',
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
-            },
-        depends=['carrier_cashondelivery']),
+        }, depends=['carrier_cashondelivery']),
         'on_change_with_carrier_sale_price_total')
-    carrier_price_total = fields.Function(fields.Numeric('Price Total',
+    carrier_price_total = fields.Function(Monetary('Price Total',
+        currency='currency', digits='currency',
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
-            },
-        depends=['carrier_cashondelivery']),
+        }, depends=['carrier_cashondelivery']),
         'on_change_with_carrier_price_total')
 
     @classmethod
     def __setup__(cls):
         super(ShipmentOut, cls).__setup__()
-        if hasattr(cls, 'cost_currency_digits'):
-            cls.carrier_cashondelivery_total.digits = (16,
-                Eval('cost_currency_digits', 2))
-            cls.carrier_cashondelivery_total.depends.append(
-                'cost_currency_digits')
-        else:
-            cls.carrier_cashondelivery_total.digits = (16, 2)
-        if hasattr(cls, 'currency_digits'):
-            cls.carrier_sale_price_total.digits = (16,
-                Eval('currency_digits', 2))
-            cls.carrier_sale_price_total.depends.append('currency_digits')
-        else:
-            cls.carrier_sale_price_total.digits = (16, 2)
         if hasattr(ShipmentOut, 'origin_cache'):
             cls.on_change_with_carrier_sale_price_total.depends.add('origin_cache')
         if hasattr(ShipmentOut, 'origin'):
