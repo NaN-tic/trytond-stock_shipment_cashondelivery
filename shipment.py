@@ -5,6 +5,7 @@ from decimal import Decimal
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Equal
+from trytond.modules.product import price_digits
 
 __all__ = ['ShipmentOut']
 
@@ -17,7 +18,7 @@ class ShipmentOut(metaclass=PoolMeta):
             'invisible': ~Eval('carrier'),
             }, help='Paid package when carrier delivery')
     carrier_cashondelivery_total = fields.Numeric(
-        'Carrier Cash OnDelivery Total', states={
+        'Carrier Cash OnDelivery Total', digits=price_digits, states={
             'invisible': ~Eval('carrier_cashondelivery'),
             'readonly': ~Eval('state').in_(['draft', 'waiting', 'assigned',
                 'packed']),
@@ -30,7 +31,7 @@ class ShipmentOut(metaclass=PoolMeta):
             }, depends=['state']),
         'on_change_with_carrier_cashondelivery_price')
     carrier_sale_price_total = fields.Function(fields.Numeric('Sale Total',
-        states={
+        digits=price_digits, states={
             'invisible': ~Eval('carrier_cashondelivery'),
             },
         depends=['carrier_cashondelivery']),
@@ -45,19 +46,6 @@ class ShipmentOut(metaclass=PoolMeta):
     @classmethod
     def __setup__(cls):
         super(ShipmentOut, cls).__setup__()
-        if hasattr(cls, 'cost_currency_digits'):
-            cls.carrier_cashondelivery_total.digits = (16,
-                Eval('cost_currency_digits', 2))
-            cls.carrier_cashondelivery_total.depends.append(
-                'cost_currency_digits')
-        else:
-            cls.carrier_cashondelivery_total.digits = (16, 2)
-        if hasattr(cls, 'currency_digits'):
-            cls.carrier_sale_price_total.digits = (16,
-                Eval('currency_digits', 2))
-            cls.carrier_sale_price_total.depends.append('currency_digits')
-        else:
-            cls.carrier_sale_price_total.digits = (16, 2)
         if hasattr(ShipmentOut, 'origin_cache'):
             cls.on_change_with_carrier_sale_price_total.depends.add('origin_cache')
         if hasattr(ShipmentOut, 'origin'):
