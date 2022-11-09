@@ -13,9 +13,9 @@ class ConfigurationSalePaymentType(ModelSQL, ModelView):
     __name__ = 'sale.configuration-sale.payment.type'
     _table = 'sale_configuration_sale_payment_type'
     sale_configuration = fields.Many2One('sale.configuration',
-        'Sale Configuration', ondelete='CASCADE', select=True)
+        'Sale Configuration', ondelete='CASCADE')
     payment_type = fields.Many2One('account.payment.type', 'Payment Type',
-        ondelete='RESTRICT', select=True, required=True)
+        ondelete='RESTRICT', required=True)
 
     @classmethod
     def __register__(cls, module_name):
