@@ -30,19 +30,19 @@ class ShipmentOut(metaclass=PoolMeta):
             'invisible': ~Eval('carrier_cashondelivery'),
             'readonly': ~Eval('state').in_(['draft', 'waiting', 'assigned',
                 'packed']),
-        }, depends=['state']),
+        }),
         'on_change_with_carrier_cashondelivery_price')
     carrier_sale_price_total = fields.Function(Monetary('Sale Total',
         currency='currency', digits='currency',
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
-        }, depends=['carrier_cashondelivery']),
+        }),
         'on_change_with_carrier_sale_price_total')
     carrier_price_total = fields.Function(Monetary('Price Total',
         currency='currency', digits='currency',
         states={
             'invisible': ~Eval('carrier_cashondelivery'),
-        }, depends=['carrier_cashondelivery']),
+        }),
         'on_change_with_carrier_price_total')
 
     @classmethod
