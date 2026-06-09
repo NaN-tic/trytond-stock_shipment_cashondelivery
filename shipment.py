@@ -77,7 +77,7 @@ class ShipmentOut(metaclass=PoolMeta):
             origin = self.origin_cache
         elif hasattr(self, 'origin'):
             origin = self.origin
-        if origin and origin.__name__ == 'sale.sale':
+        if origin and getattr(origin, '__name__', None) == 'sale.sale':
             price = origin.total_amount
         return price
 
